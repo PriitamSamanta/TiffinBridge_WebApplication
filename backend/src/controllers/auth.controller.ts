@@ -3,7 +3,7 @@ import { registerUser, loginUser } from "../services/auth.service";
 
 export const register = async (req: Request, res: Response) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
     if (!name || !email || !password) {
       return res.status(400).json({
@@ -12,10 +12,18 @@ export const register = async (req: Request, res: Response) => {
       });
     }
 
+    if (role && role !== "CUSTOMER" && role !== "PROVIDER") {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid role",
+      });
+    }
+
     const user = await registerUser({
       name,
       email,
       password,
+      role,
     });
 
     return res.status(201).json({
