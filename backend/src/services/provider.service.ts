@@ -31,3 +31,24 @@ export const createProvider = async (data: CreateProviderData) => {
 
   return provider;
 };
+
+export const getApprovedProviders = async () => {
+  const providers = await prisma.provider.findMany({
+    where: {
+      status: "APPROVED",
+    },
+    select: {
+      id: true,
+      businessName: true,
+      description: true,
+      phone: true,
+      address: true,
+      status: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return providers;
+};

@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { AuthRequest } from "../middleware/auth.middleware";
-import { createProvider } from "../services/provider.service";
+import { createProvider, getApprovedProviders, } from "../services/provider.service";
 
 export const registerProvider = async (
   req: AuthRequest,
@@ -40,6 +40,26 @@ export const registerProvider = async (
     return res.status(400).json({
       success: false,
       message: error.message,
+    });
+  }
+};
+
+export const getProviders = async (
+  req: AuthRequest,
+  res: Response
+) => {
+  try {
+    const providers = await getApprovedProviders();
+
+    return res.status(200).json({
+      success: true,
+      message: "Approved providers fetched successfully",
+      data: providers,
+    });
+  } catch (error: any) {
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch providers",
     });
   }
 };
