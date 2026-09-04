@@ -5,6 +5,7 @@ import authRoutes from "./routes/auth.routes";
 import userRoutes from "./routes/user.routes";
 import providerRoutes from "./routes/provider.routes";
 import adminRoutes from "./routes/admin.routes";
+import menuRoutes from "./routes/menu.routes";
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/providers", providerRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/menu", menuRoutes);
 
 app.get("/", (_req, res) => {
   res.json({
